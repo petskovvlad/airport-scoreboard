@@ -1,4 +1,4 @@
-# React Calendar project
+# Airport project
 
 ### [Site link](https://famous-sunflower-c83206.netlify.app/)
 
