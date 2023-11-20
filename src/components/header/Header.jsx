@@ -6,7 +6,8 @@ const Header = () => {
     <div className="header">
         <img 
           className="header__logo" 
-          src="https://iev.aero/_nuxt/img/logo@2x.2d2c20b.png" alt="logo"></img>
+          src="https://iev.aero/_nuxt/img/logo@2x.2d2c20b.png" 
+          alt="logo" />
     </div>
   )
 }

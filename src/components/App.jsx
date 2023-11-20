@@ -1,13 +1,9 @@
 import React from "react";
-import FlightsInput from "./flightsInput/FlightsInput";
-import Header from "./header/Header";
+import Page from "./Page";
 
 const App = () => {
   return (
-    <div className="page">
-      <Header />
-      <FlightsInput />
-    </div>
+   <Page />
   )
 }
 
