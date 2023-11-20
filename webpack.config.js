@@ -47,7 +47,8 @@ module.exports = (env, argv) => {
   };
 
   if (isProduction) {
-    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    config.plugins.push(
+      new webpack.HotModuleReplacementPlugin());
   }
 
   if (isProduction) {
