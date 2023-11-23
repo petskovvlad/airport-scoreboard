@@ -8,9 +8,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import FlightInfo from "./FlightInfo";
-import CircularProgress from '@mui/material/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress';
 import { getFlightsData } from "../../flights.actions";
-import { arrivalListSelector, departureListSelector } from "../../flights.selectors";
+import { arrivalListSelector, departureListSelector, filteredArrivalListSelector, filteredDepartureListSelector } from "../../flights.selectors";
 
 import './flightsList.scss';
 
@@ -19,10 +19,11 @@ const FlightsList = ({ getFlightsData }) => {
   const [date, setDate] = useState(
     localStorage.getItem('flightsDate')
     ? dayjs(localStorage.getItem('flightsDate'))
-    : dayjs('11 11 2021')
+    : dayjs()
   )
-  const departuresList = useSelector(state => departureListSelector(state));
-  const arrivalsList = useSelector(state => arrivalListSelector(state));
+
+  const filteredDeparturesList = useSelector((state) => filteredDepartureListSelector(state, date));
+  const filteredArrivalsList = useSelector((state) => filteredArrivalListSelector(state, date));
   const isDataFetching = useSelector(state => state.isDataFetching);
 
   const noFlights = (
@@ -33,12 +34,13 @@ const FlightsList = ({ getFlightsData }) => {
     </tr>
   )
 
-  const showData = data => 
-  data.length === 0
-  ? noFlights
-  : data.map(flightData => (
-    <FlightInfo key={flightData.Id} flightData={flightData}/>
-  ))
+  const showData = data => {
+    return data.length === 0
+    ? noFlights
+    : data.map(flightData => (
+      <FlightInfo key={flightData.id} flightData={flightData}/>
+      ))
+    }
 
   useEffect(() => {
     getFlightsData()
@@ -102,9 +104,9 @@ const FlightsList = ({ getFlightsData }) => {
             <tbody className="table__body">
               <Switch>
                 <Route exact path='/'>
-                  {showData(departuresList)}
+                  {showData(filteredDeparturesList)}
                 </Route>
-                <Route path='/arrivals'>{showData(arrivalsList)}</Route>
+                <Route path='/arrivals'>{showData(filteredArrivalsList)}</Route>
               </Switch>
             </tbody>
           </table>
