@@ -1,0 +1,150 @@
+.board {
+  margin-top: 50px;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-picker {
+  width: 100%;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+  background-color: white;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  background-color: #1eb7ee;
+  border-top-right-radius: 40px;
+  border-top-left-radius: 40px;
+  width: 100%;
+
+  &__departures {
+    border-top-left-radius: 40px;
+  }
+
+  &__arrivals {
+    border-top-right-radius: 40px;
+  }
+}
+
+.btn {
+  flex-grow: 3;
+  background-color: #1eb7ee;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+
+  & button {
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: 500;
+    color: white;
+    border: none;
+    background-color: transparent;
+  }
+
+  &-selected {
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    flex-grow: 4;
+    background-color: white;
+    & button {
+      color: #1eb7ee;
+    }
+  }
+}
+
+.table {
+  background-color: white;
+  padding-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  &__body tr {
+    &:nth-child(odd) {
+      background-color: rgba(0, 102, 135, 0.1);
+    }
+  }
+}
+
+th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  opacity: 60%;
+  font-weight: 500;
+  font-size: 18px;
+  &:nth-child(0) {
+    width: 7%;
+  }
+  &:nth-child(1) {
+    width: 13%;
+  }
+  &:nth-child(2) {
+    width: 13%;
+  }
+  &:nth-child(3) {
+    width: 10%;
+  }
+  &:nth-child(4) {
+    width: 10%;
+  }
+  &:nth-child(5) {
+    width: 10%;
+  }
+  &:nth-child(5) {
+    width: 14%;
+  }
+  &:nth-child(6) {
+    width: 8%;
+  }   
+}
+
+td {
+  text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+tr {
+  height: 70px;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.company-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 70px;
+}
+
+.terminal span {
+  display: inline-block;
+  font-weight: bold;
+  height: 40px;
+  width: 40px;
+  border: 1px solid #63c745;
+  border-radius: 50%;
+  color: #63c745;
+  line-height: 38px;
+}
+
+.d-term {
+  border: 1px solid #1eb7ee !important;
+  color: #1eb7ee !important;
+}
+
+.no-flights {
+  column-span: 8;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+}

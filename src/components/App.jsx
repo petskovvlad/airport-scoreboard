@@ -1,9 +1,13 @@
 import React from "react";
+import { Provider } from 'react-redux';
 import Page from "./Page";
+import store from '../store'; 
 
 const App = () => {
   return (
-   <Page />
+    <Provider store={store}>
+      <Page />
+    </Provider>
   )
 }
 
