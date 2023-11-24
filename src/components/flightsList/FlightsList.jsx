@@ -34,6 +34,23 @@ const FlightsList = ({ getFlightsData }) => {
     </tr>
   )
 
+  const getPrevDay = () => {
+    const newDate = dayjs(localStorage.getItem('flightsDate')).subtract(1, 'day');
+    setDate(newDate);
+    localStorage.setItem('flightsDate', newDate.format());
+  }
+
+  const getNextDay = () => {
+    const newDate = dayjs(localStorage.getItem('flightsDate')).add(1, 'day');
+    setDate(newDate);
+    localStorage.setItem('flightsDate', newDate.format());
+  }
+
+  const getToday = () => {
+    setDate(dayjs());
+    localStorage.setItem('flightsDate', dayjs().format());
+  };
+
   const showData = data => {
     return data.length === 0
     ? noFlights
@@ -86,9 +103,9 @@ const FlightsList = ({ getFlightsData }) => {
               />
           </LocalizationProvider>
           <div className="date-picker__buttons">
-            <button className="date-picker__btn prev-btn">PREV</button>
-            <button className="date-picker__btn today-btn">TODAY</button>
-            <button className="date-picker__btn next-btn">NEXT</button>
+            <button className="date-picker__btn prev-btn" onClick={getPrevDay}>PREV</button>
+            <button className="date-picker__btn today-btn" onClick={getToday}>TODAY</button>
+            <button className="date-picker__btn next-btn" onClick={getNextDay}>NEXT</button>
           </div>
         </div>
         {isDataFetching && <CircularProgress sx={{ marginTop: '36px' }} />}

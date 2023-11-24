@@ -9,6 +9,8 @@
 
 .date-picker {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   padding-left: 24px;
   padding-top: 16px;
@@ -16,7 +18,8 @@
   background-color: white;
 
   &__buttons {
-    margin: 0 auto;
+    margin: 25px;
+    height: 50px;
   }
 
   &__btn {
@@ -27,6 +30,10 @@
     color: white;
     font-weight: bold;
     border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
     
     &:nth-child(2) {
       margin: 0 5px;
@@ -97,9 +104,6 @@ th {
   opacity: 60%;
   font-weight: 500;
   font-size: 18px;
-  &:nth-child(0) {
-    width: 7%;
-  }
   &:nth-child(1) {
     width: 13%;
   }
@@ -107,20 +111,20 @@ th {
     width: 13%;
   }
   &:nth-child(3) {
-    width: 10%;
+    width: 8%;
   }
   &:nth-child(4) {
-    width: 10%;
+    width: 15%;
   }
   &:nth-child(5) {
     width: 10%;
   }
   &:nth-child(5) {
-    width: 14%;
+    width: 15%;
   }
   &:nth-child(6) {
-    width: 8%;
-  }   
+    width: 13%;
+  }
 }
 
 td {
