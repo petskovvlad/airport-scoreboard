@@ -1,6 +1,6 @@
 # Airport project
 
-### [Site link]()
+### [Site link](https://sweet-jalebi-60d352.netlify.app/)
 
 ### The tech stack is:
 
@@ -17,5 +17,3 @@
 ### Author
 
 - Petskov Vladyslav
-# airport-scoreboard
-# airport-scoreboard

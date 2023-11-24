@@ -85,6 +85,11 @@ const FlightsList = ({ getFlightsData }) => {
               textField={params => <TextField {...params} />} 
               />
           </LocalizationProvider>
+          <div className="date-picker__buttons">
+            <button className="date-picker__btn prev-btn">PREV</button>
+            <button className="date-picker__btn today-btn">TODAY</button>
+            <button className="date-picker__btn next-btn">NEXT</button>
+          </div>
         </div>
         {isDataFetching && <CircularProgress sx={{ marginTop: '36px' }} />}
         {!isDataFetching && (
