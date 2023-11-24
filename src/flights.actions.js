@@ -19,7 +19,7 @@ export const flightsDataFfetching = () => {
 
 export const searchFlights = filterText => {
   return {
-    type: FLIGHTS_DATA_FETCHING,
+    type: SEARCH_FLIGHTS,
     payload: filterText,
   }
 }

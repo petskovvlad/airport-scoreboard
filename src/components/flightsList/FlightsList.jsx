@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
 import { connect, useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import FlightInfo from "./FlightInfo";
 import CircularProgress from '@mui/material/CircularProgress';
 import { getFlightsData } from "../../flights.actions";
-import { arrivalListSelector, departureListSelector, filteredArrivalListSelector, filteredDepartureListSelector } from "../../flights.selectors";
+import { filteredArrivalListSelector, filteredDepartureListSelector } from "../../flights.selectors";
 
 import './flightsList.scss';
 

@@ -1,10 +1,16 @@
 import dayjs from 'dayjs';
 export const departureListSelector = (state) => {
-  return state.flightsData.filter(flight => flight.type === 'DEPARTURE')
+  const departures = state.flightsData || [];
+  return departures
+  .slice()
+  .filter(flight => flight.type === 'DEPARTURE')
 }
 
 export const arrivalListSelector = (state) => {
-  return state.flightsData.filter(flight => flight.type === 'ARRIVAL');
+  const arrivals = state.flightsData || [];
+  return arrivals
+  .slice()
+  .filter(flight => flight.type === 'ARRIVAL');
 }
 
 export const filteredDepartureListSelector = (state, selectedDate) => {
@@ -12,7 +18,11 @@ export const filteredDepartureListSelector = (state, selectedDate) => {
   return departuresList.filter(
     (flightData) =>
       dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day')
-  );
+  )
+      .filter(flight => flight.codeShare
+        .toLowerCase()
+        .includes(state.filterText.toLowerCase())
+    );
 };
 
 export const filteredArrivalListSelector = (state, selectedDate) => {
@@ -20,5 +30,9 @@ export const filteredArrivalListSelector = (state, selectedDate) => {
   return arrivalsList.filter(
     (flightData) =>
       dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day')
-  );
+  )
+  .filter(flight => flight.codeShare
+    .toLowerCase()
+    .includes(state.filterText.toLowerCase())
+    );
 };
