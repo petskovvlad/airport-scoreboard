@@ -1,38 +1,52 @@
+import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
-export const departureListSelector = (state) => {
-  const departures = state.flightsData || [];
-  return departures
-  .slice()
-  .filter(flight => flight.type === 'DEPARTURE')
-}
 
-export const arrivalListSelector = (state) => {
-  const arrivals = state.flightsData || [];
-  return arrivals
-  .slice()
-  .filter(flight => flight.type === 'ARRIVAL');
-}
+const flightsDataSelector = state => state.flightsData || [];
+const filterTextSelector = state => state.filterText;
 
-export const filteredDepartureListSelector = (state, selectedDate) => {
-  const departuresList = departureListSelector(state);
-  return departuresList.filter(
-    (flightData) =>
-      dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day')
-  )
-      .filter(flight => flight.codeShare
-        .toLowerCase()
-        .includes(state.filterText.toLowerCase())
-    );
-};
+const departureListSelector = createSelector(
+  flightsDataSelector,
+  flightsData => flightsData.filter(flight => flight.type === 'DEPARTURE')
+);
 
-export const filteredArrivalListSelector = (state, selectedDate) => {
-  const arrivalsList = arrivalListSelector(state);
-  return arrivalsList.filter(
-    (flightData) =>
-      dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day')
-  )
-  .filter(flight => flight.codeShare
-    .toLowerCase()
-    .includes(state.filterText.toLowerCase())
-    );
+const arrivalListSelector = createSelector(
+  flightsDataSelector,
+  flightsData => flightsData.filter(flight => flight.type === 'ARRIVAL')
+);
+
+const selectedDateSelector = (_, selectedDate) => selectedDate;
+
+const filteredDepartureListSelector = createSelector(
+  departureListSelector,
+  selectedDateSelector,
+  filterTextSelector,
+  (departures, selectedDate, filterText) =>
+    departures
+      .filter(flightData =>
+        dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day')
+      )
+      .filter(flight =>
+        flight.codeShare.toLowerCase().includes(filterText.toLowerCase())
+      )
+);
+
+const filteredArrivalListSelector = createSelector(
+  arrivalListSelector,
+  selectedDateSelector,
+  filterTextSelector,
+  (arrivals, selectedDate, filterText) =>
+    arrivals
+      .filter(flightData =>
+        dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day')
+      )
+      .filter(flight =>
+        flight.codeShare.toLowerCase().includes(filterText.toLowerCase())
+      )
+);
+
+export {
+  departureListSelector,
+  arrivalListSelector,
+  filteredDepartureListSelector,
+  filteredArrivalListSelector,
 };
