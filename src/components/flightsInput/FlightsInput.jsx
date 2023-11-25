@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -36,6 +37,10 @@ const FlightsInput = ({ searchFlights }) => {
     </div>
   )
 }
+
+FlightsInput.propTypes = {
+  searchFlights: PropTypes.func.isRequired,
+};
 
 const mapDispatch = {
   searchFlights,

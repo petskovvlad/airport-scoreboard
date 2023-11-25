@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
 import { connect, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -137,6 +138,10 @@ const FlightsList = ({ getFlightsData }) => {
       </BrowserRouter>
   )
 }
+
+FlightsList.propTypes = {
+  getFlightsData: PropTypes.func.isRequired,
+};
 
 const mapDispatch = {
   getFlightsData,
