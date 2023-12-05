@@ -2,6 +2,8 @@
 
 ### [Site link](https://sweet-jalebi-60d352.netlify.app/)
 
+Display departures/arrivals flights by date and flight number. Navigation buttons. 
+
 ### The tech stack is:
 
 - [HTML5](https://en.wikipedia.org/wiki/HTML5)
