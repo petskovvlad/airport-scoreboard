@@ -18,6 +18,7 @@
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.3.0",
+    "eslint-plugin-prettier": "^5.1.0",
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.3.0",
     "sass": "^1.42.1",

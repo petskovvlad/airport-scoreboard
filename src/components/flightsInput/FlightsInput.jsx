@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { searchFlights } from "../../flights.actions";
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { searchFlights } from '../../redux/flights.actions';
 import './flightsInput.scss';
 
 const FlightsInput = ({ searchFlights }) => {
   const [inputValue, changeInputValue] = useState('');
 
   const handleChange = e => {
-    changeInputValue(e.target.value)
-  }
+    changeInputValue(e.target.value);
+  };
   return (
     <div className="flight-input">
       <h1 className="flight-input__title">FLIGHT SEARCH</h1>
@@ -19,24 +19,21 @@ const FlightsInput = ({ searchFlights }) => {
         <i className="search-block__manifier">
           <FontAwesomeIcon icon={faSearch} />
         </i>
-        <input 
+        <input
           placeholder="Flight #"
-          type='text'
+          type="text"
           name="flight-number"
           className="search-block__input"
           value={inputValue}
           onChange={handleChange}
         />
-        <button 
-          className="search-block__button"
-          onClick={() => searchFlights(inputValue)}
-        >
+        <button className="search-block__button" onClick={() => searchFlights(inputValue)}>
           Search
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 FlightsInput.propTypes = {
   searchFlights: PropTypes.func.isRequired,
@@ -44,6 +41,6 @@ FlightsInput.propTypes = {
 
 const mapDispatch = {
   searchFlights,
-}
+};
 
 export default connect(null, mapDispatch)(FlightsInput);
