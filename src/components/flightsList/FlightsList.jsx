@@ -111,29 +111,35 @@ const FlightsList = ({ getFlightsData }) => {
           </div>
         </div>
         {isDataFetching && <CircularProgress sx={{ marginTop: '36px' }} />}
-        {!isDataFetching && (
-          <table className="table">
-            <thead className="table__header">
-              <tr>
-                <th>Terminal</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Departure</th>
-                <th>Arrival</th>
-                <th>Status</th>
-                <th>Airline</th>
-                <th>Flight</th>
-              </tr>
-            </thead>
-            <tbody className="table__body">
-              <Switch>
-                <Route exact path="/">
-                  {showData(filteredDeparturesList)}
-                </Route>
-                <Route path="/arrivals">{showData(filteredArrivalsList)}</Route>
-              </Switch>
-            </tbody>
-          </table>
+        {!isDataFetching && ( // Check if data is available before rendering the table
+          <>
+            {filteredDeparturesList.length > 0 || filteredArrivalsList.length > 0 ? (
+              <table className="table">
+                <thead className="table__header">
+                  <tr>
+                    <th>Terminal</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Status</th>
+                    <th>Airline</th>
+                    <th>Flight</th>
+                  </tr>
+                </thead>
+                <tbody className="table__body">
+                  <Switch>
+                    <Route exact path="/">
+                      {showData(filteredDeparturesList)}
+                    </Route>
+                    <Route path="/arrivals">{showData(filteredArrivalsList)}</Route>
+                  </Switch>
+                </tbody>
+              </table>
+            ) : (
+              noFlights
+            )}
+          </>
         )}
       </div>
     </BrowserRouter>
