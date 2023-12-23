@@ -111,7 +111,7 @@ const FlightsList = ({ getFlightsData }) => {
           </div>
         </div>
         {isDataFetching && <CircularProgress sx={{ marginTop: '36px' }} />}
-        {!isDataFetching && ( // Check if data is available before rendering the table
+        {!isDataFetching && (
           <>
             {filteredDeparturesList.length > 0 || filteredArrivalsList.length > 0 ? (
               <table className="table">
