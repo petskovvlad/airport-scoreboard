@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -28,6 +28,9 @@ const FlightsList = ({ getFlightsData }) => {
   const filteredArrivalsList = useSelector(state => filteredArrivalListSelector(state, date));
   const isDataFetching = useSelector(state => state.isDataFetching);
 
+  const location = useLocation();
+  const history = useHistory();
+
   const noFlights = (
     <tr>
       <td colSpan="8" className="no-flights">
@@ -36,21 +39,36 @@ const FlightsList = ({ getFlightsData }) => {
     </tr>
   );
 
+  const currentType = departuresSelected ? 'departures' : 'arrivals';
+
   const getPrevDay = () => {
     const newDate = dayjs(localStorage.getItem('flightsDate')).subtract(1, 'day');
     setDate(newDate);
     localStorage.setItem('flightsDate', newDate.format());
+
+    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
+
+    history.push(newUrl);
   };
 
   const getNextDay = () => {
     const newDate = dayjs(localStorage.getItem('flightsDate')).add(1, 'day');
     setDate(newDate);
     localStorage.setItem('flightsDate', newDate.format());
+
+    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
+
+    history.push(newUrl);
   };
 
   const getToday = () => {
-    setDate(dayjs());
-    localStorage.setItem('flightsDate', dayjs().format());
+    const newDate = dayjs();
+    setDate(newDate);
+    localStorage.setItem('flightsDate', newDate.format());
+
+    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
+
+    history.push(newUrl);
   };
 
   const showData = data => {
@@ -60,8 +78,13 @@ const FlightsList = ({ getFlightsData }) => {
   };
 
   useEffect(() => {
+    const parsedDate = new URLSearchParams(location.search).get('date');
+    if (parsedDate) {
+      setDate(dayjs(parsedDate));
+    }
+
     getFlightsData();
-  }, []);
+  }, [location.search]);
 
   return (
     <BrowserRouter>
@@ -72,7 +95,7 @@ const FlightsList = ({ getFlightsData }) => {
             {...(!departuresSelected && {
               onClick: () => changeSelected(!departuresSelected),
             })}
-            to="/"
+            to={`/departures/${date.format('MM-DD-YYYY')}`}
           >
             <button>DEPARTURES</button>
           </Link>
@@ -81,7 +104,7 @@ const FlightsList = ({ getFlightsData }) => {
             {...(departuresSelected && {
               onClick: () => changeSelected(!departuresSelected),
             })}
-            to="/arrivals"
+            to={`/arrivals/${date.format('MM-DD-YYYY')}`}
           >
             <button>ARRIVALS</button>
           </Link>
@@ -92,8 +115,10 @@ const FlightsList = ({ getFlightsData }) => {
               label="Choose your date"
               value={date}
               onChange={newValue => {
-                setDate(new Date(newValue));
-                localStorage.setItem('flightsDate', new Date(newValue));
+                setDate(newValue);
+                localStorage.setItem('flightsDate', newValue.format());
+                const newUrl = `/${currentType}/${newValue.format('MM-DD-YYYY')}`;
+                history.push(newUrl);
               }}
               textField={params => <TextField {...params} />}
             />
@@ -129,7 +154,7 @@ const FlightsList = ({ getFlightsData }) => {
                 </thead>
                 <tbody className="table__body">
                   <Switch>
-                    <Route exact path="/">
+                    <Route exact path="/departures">
                       {showData(filteredDeparturesList)}
                     </Route>
                     <Route path="/arrivals">{showData(filteredArrivalsList)}</Route>
