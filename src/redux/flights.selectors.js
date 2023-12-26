@@ -21,7 +21,10 @@ const filteredDepartureListSelector = createSelector(
   (departures, selectedDate, filterText) =>
     departures
       .filter(flightData => dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day'))
-      .filter(flight => flight.codeShare.toLowerCase().includes(filterText.toLowerCase())),
+      .filter(
+        flight =>
+          flight.codeShare && flight.codeShare.toLowerCase().includes(filterText.toLowerCase()),
+      ),
 );
 
 const filteredArrivalListSelector = createSelector(
@@ -31,7 +34,10 @@ const filteredArrivalListSelector = createSelector(
   (arrivals, selectedDate, filterText) =>
     arrivals
       .filter(flightData => dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day'))
-      .filter(flight => flight.codeShare.toLowerCase().includes(filterText.toLowerCase())),
+      .filter(
+        flight =>
+          flight.codeShare && flight.codeShare.toLowerCase().includes(filterText.toLowerCase()),
+      ),
 );
 
 export {
