@@ -84,7 +84,7 @@ const FlightsList = ({ getFlightsData }) => {
     }
 
     getFlightsData();
-  }, [location.search]);
+  }, [location.pathname, location.search, date, getFlightsData]);
 
   return (
     <BrowserRouter>
@@ -154,7 +154,7 @@ const FlightsList = ({ getFlightsData }) => {
                 </thead>
                 <tbody className="table__body">
                   <Switch>
-                    <Route exact path="/departures">
+                    <Route path="/departures">
                       {showData(filteredDeparturesList)}
                     </Route>
                     <Route path="/arrivals">{showData(filteredArrivalsList)}</Route>

@@ -6,7 +6,7 @@ const filterTextSelector = state => state.filterText;
 
 const departureListSelector = createSelector(flightsDataSelector, flightsData =>
   flightsData.filter(flight => flight.type === 'DEPARTURE'),
-);
+  );
 
 const arrivalListSelector = createSelector(flightsDataSelector, flightsData =>
   flightsData.filter(flight => flight.type === 'ARRIVAL'),
