@@ -6,7 +6,10 @@ Display departures/arrivals flights by date and flight number. Navigation button
 
 Layout support desktop (up-to-1920) version
 
-Test flights: 12/31/2021, 04/27/2022, 06/30/2023.
+Test flights: 
+12/31/2021,
+04/27/2022,
+06/30/2023.
 
 ### The tech stack is:
 
