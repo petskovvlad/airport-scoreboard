@@ -39,9 +39,7 @@ module.exports = (env, argv) => {
         template: './src/index.html',
       }),
       new CopyPlugin({
-        patterns: [
-          { from: '_redirects', to: '' },
-        ],
+        patterns: [{ from: '_redirects', to: '' }],
       }),
     ],
     devServer: {
