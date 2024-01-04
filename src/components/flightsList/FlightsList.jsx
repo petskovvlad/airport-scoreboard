@@ -75,27 +75,32 @@ const FlightsList = ({ getFlightsData }) => {
       : data.map(flightData => <FlightInfo key={flightData.id} flightData={flightData} />);
   };
 
+  const handleButtonClick = (newType) => {
+    changeSelected(newType === 'departures');
+    localStorage.setItem('selectedType', newType);
+  };
+
   useEffect(() => {
+    const savedType = localStorage.getItem('selectedType');
+    if (savedType) {
+      changeSelected(savedType === 'departures');
+    }
     getFlightsData();
   }, [type, currentDate, date, getFlightsData]);
 
   return (
     <div className="board">
       <div className="buttons">
-        <Link
+      <Link
           className={`btn buttons__departures ${departuresSelected ? 'btn-selected' : ''}`}
-          {...(!departuresSelected && {
-            onClick: () => changeSelected(!departuresSelected),
-          })}
+          onClick={() => handleButtonClick('departures')}
           to={`/departures/${date.format('MM-DD-YYYY')}`}
         >
           <button>DEPARTURES</button>
         </Link>
         <Link
           className={`btn buttons__arrivals ${!departuresSelected ? 'btn-selected' : ''}`}
-          {...(departuresSelected && {
-            onClick: () => changeSelected(!departuresSelected),
-          })}
+          onClick={() => handleButtonClick('arrivals')}
           to={`/arrivals/${date.format('MM-DD-YYYY')}`}
         >
           <button>ARRIVALS</button>
