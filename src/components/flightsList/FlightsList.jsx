@@ -20,7 +20,9 @@ import './flightsList.scss';
 
 const FlightsList = ({ getFlightsData }) => {
   const history = useHistory();
-  const { type, currentDate } = useParams();
+
+  const { 0: paramValue } = useParams();
+  const [type, currentDate] = paramValue ? paramValue.split('/') : [undefined, undefined];
 
   const [departuresSelected, changeSelected] = useState(() => {
     switch (type) {
@@ -75,7 +77,7 @@ const FlightsList = ({ getFlightsData }) => {
       : data.map(flightData => <FlightInfo key={flightData.id} flightData={flightData} />);
   };
 
-  const handleButtonClick = (newType) => {
+  const handleButtonClick = newType => {
     changeSelected(newType === 'departures');
     localStorage.setItem('selectedType', newType);
   };
@@ -91,7 +93,7 @@ const FlightsList = ({ getFlightsData }) => {
   return (
     <div className="board">
       <div className="buttons">
-      <Link
+        <Link
           className={`btn buttons__departures ${departuresSelected ? 'btn-selected' : ''}`}
           onClick={() => handleButtonClick('departures')}
           to={`/departures/${date.format('MM-DD-YYYY')}`}
