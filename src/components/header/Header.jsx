@@ -6,9 +6,9 @@ import './header.scss';
 
 const Header = () => {
   return (
-    <div className="header">
+    <header className="header">
       <FontAwesomeIcon icon={faPlane} className="header__logo" />
-    </div>
+    </header>
   );
 };
 

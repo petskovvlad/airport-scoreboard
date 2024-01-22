@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { searchFlights } from '../../redux/flights.actions';
+import { searchFlights } from '@redux/flights.actions.js';
 import './flightsInput.scss';
 
 const FlightsInput = ({ searchFlights }) => {
   const [inputValue, changeInputValue] = useState('');
 
-  const handleChange = e => {
-    changeInputValue(e.target.value);
-  };
   return (
     <div className="flight-input">
       <h1 className="flight-input__title">FLIGHT SEARCH</h1>
@@ -25,7 +22,7 @@ const FlightsInput = ({ searchFlights }) => {
           name="flight-number"
           className="search-block__input"
           value={inputValue}
-          onChange={handleChange}
+          onChange={(e) => changeInputValue(e.target.value)}
         />
         <button className="search-block__button" onClick={() => searchFlights(inputValue)}>
           Search

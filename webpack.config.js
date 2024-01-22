@@ -31,6 +31,9 @@ module.exports = (env, argv) => {
     },
     resolve: {
       extensions: ['.js', '.jsx'],
+      alias: {
+        '@redux': `${__dirname}/src/redux`,
+      },
     },
     plugins: [
       new webpack.ProgressPlugin(),

@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Switch, Route, useHistory, useParams } from 'react-router-dom';
+import { Link, Switch, Route, useParams } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import FlightInfo from './FlightInfo';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getFlightsData } from '../../redux/flights.actions';
+import { getFlightsData } from '@redux/flights.actions';
 import {
   filteredArrivalListSelector,
   filteredDepartureListSelector,
-} from '../../redux/flights.selectors';
+} from '@redux/flights.selectors';
 
 import './flightsList.scss';
+import Calendar from './Calendar';
 
 const FlightsList = ({ getFlightsData }) => {
-  const history = useHistory();
-
   const { 0: paramValue } = useParams();
-  const [type, currentDate] = paramValue ? paramValue.split('/') : [undefined, undefined];
+  const [type, currentDate] =
+    paramValue && typeof paramValue === 'string' ? paramValue.split('/') : [undefined, undefined];
 
-  const [departuresSelected, changeSelected] = useState(() => {
+  const [buttonTypeSelected, changeButtonTypeSelected] = useState(() => {
     switch (type) {
       case 'departures':
         return true;
@@ -48,28 +43,7 @@ const FlightsList = ({ getFlightsData }) => {
     </tr>
   );
 
-  const currentType = departuresSelected ? 'departures' : 'arrivals';
-
-  const getPrevDay = () => {
-    const newDate = date.subtract(1, 'day');
-    setDate(newDate);
-    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
-    history.push(newUrl);
-  };
-
-  const getNextDay = () => {
-    const newDate = date.add(1, 'day');
-    setDate(newDate);
-    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
-    history.push(newUrl);
-  };
-
-  const getToday = () => {
-    const newDate = dayjs();
-    setDate(newDate);
-    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
-    history.push(newUrl);
-  };
+  const currentType = buttonTypeSelected ? 'departures' : 'arrivals';
 
   const showData = data => {
     return data.length === 0
@@ -78,14 +52,14 @@ const FlightsList = ({ getFlightsData }) => {
   };
 
   const handleButtonClick = newType => {
-    changeSelected(newType === 'departures');
+    changeButtonTypeSelected(newType === 'departures');
     localStorage.setItem('selectedType', newType);
   };
 
   useEffect(() => {
     const savedType = localStorage.getItem('selectedType');
     if (savedType) {
-      changeSelected(savedType === 'departures');
+      changeButtonTypeSelected(savedType === 'departures');
     }
     getFlightsData();
   }, [type, currentDate, date, getFlightsData]);
@@ -94,47 +68,24 @@ const FlightsList = ({ getFlightsData }) => {
     <div className="board">
       <div className="buttons">
         <Link
-          className={`btn buttons__departures ${departuresSelected ? 'btn-selected' : ''}`}
+          className={`btn buttons__departures ${buttonTypeSelected ? 'btn-selected' : ''}`}
           onClick={() => handleButtonClick('departures')}
           to={`/departures/${date.format('MM-DD-YYYY')}`}
         >
           <button>DEPARTURES</button>
         </Link>
         <Link
-          className={`btn buttons__arrivals ${!departuresSelected ? 'btn-selected' : ''}`}
+          className={`btn buttons__arrivals ${!buttonTypeSelected ? 'btn-selected' : ''}`}
           onClick={() => handleButtonClick('arrivals')}
           to={`/arrivals/${date.format('MM-DD-YYYY')}`}
         >
           <button>ARRIVALS</button>
         </Link>
       </div>
-      <div className="date-picker">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="Choose your date"
-            value={date}
-            onChange={newValue => {
-              setDate(newValue);
-              const newUrl = `/${currentType}/${newValue.format('MM-DD-YYYY')}`;
-              history.push(newUrl);
-            }}
-            textField={params => <TextField {...params} />}
-          />
-        </LocalizationProvider>
-        <div className="date-picker__buttons">
-          <button className="date-picker__btn prev-btn" onClick={getPrevDay}>
-            PREV
-          </button>
-          <button className="date-picker__btn today-btn" onClick={getToday}>
-            TODAY
-          </button>
-          <button className="date-picker__btn next-btn" onClick={getNextDay}>
-            NEXT
-          </button>
-        </div>
-      </div>
-      {isDataFetching && <CircularProgress sx={{ marginTop: '36px' }} />}
-      {!isDataFetching && (
+      <Calendar setDate={setDate} date={date} currentType={currentType} />
+      {isDataFetching ? (
+        <CircularProgress sx={{ marginTop: '36px' }} />
+      ) : (
         <>
           {filteredDeparturesList.length > 0 || filteredArrivalsList.length > 0 ? (
             <table className="table">
@@ -166,12 +117,12 @@ const FlightsList = ({ getFlightsData }) => {
   );
 };
 
-FlightsList.propTypes = {
-  getFlightsData: PropTypes.func.isRequired,
-};
-
 const mapDispatch = {
   getFlightsData,
+};
+
+FlightsList.propTypes = {
+  getFlightsData: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatch)(FlightsList);
