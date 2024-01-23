@@ -4,6 +4,7 @@ import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import FlightInfo from './FlightInfo';
+import Calendar from './Calendar';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getFlightsData } from '@redux/flights.actions';
 import {
@@ -12,7 +13,6 @@ import {
 } from '@redux/flights.selectors';
 
 import './flightsList.scss';
-import Calendar from './Calendar';
 
 const FlightsList = ({ getFlightsData }) => {
   const { 0: paramValue } = useParams();
@@ -43,8 +43,6 @@ const FlightsList = ({ getFlightsData }) => {
     </tr>
   );
 
-  const currentType = buttonTypeSelected ? 'departures' : 'arrivals';
-
   const showData = data => {
     return data.length === 0
       ? noFlights
@@ -68,21 +66,21 @@ const FlightsList = ({ getFlightsData }) => {
     <div className="board">
       <div className="buttons">
         <Link
-          className={`btn buttons__departures ${buttonTypeSelected ? 'btn-selected' : ''}`}
+          className={`btn buttons__departures ${buttonTypeSelected ? 'btn_selected' : ''}`}
           onClick={() => handleButtonClick('departures')}
           to={`/departures/${date.format('MM-DD-YYYY')}`}
         >
           <button>DEPARTURES</button>
         </Link>
         <Link
-          className={`btn buttons__arrivals ${!buttonTypeSelected ? 'btn-selected' : ''}`}
+          className={`btn buttons__arrivals ${!buttonTypeSelected ? 'btn_selected' : ''}`}
           onClick={() => handleButtonClick('arrivals')}
           to={`/arrivals/${date.format('MM-DD-YYYY')}`}
         >
           <button>ARRIVALS</button>
         </Link>
       </div>
-      <Calendar setDate={setDate} date={date} currentType={currentType} />
+      <Calendar setDate={setDate} date={date} type={type} />
       {isDataFetching ? (
         <CircularProgress sx={{ marginTop: '36px' }} />
       ) : (

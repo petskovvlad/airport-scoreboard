@@ -6,27 +6,27 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
-const Calendar = ({ currentType, date, setDate }) => {
+const Calendar = ({ type, date, setDate }) => {
   const history = useHistory();
 
   const getPrevDay = () => {
     const newDate = date.subtract(1, 'day');
     setDate(newDate);
-    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
+    const newUrl = `/${type}/${newDate.format('MM-DD-YYYY')}`;
     history.push(newUrl);
   };
 
   const getNextDay = () => {
     const newDate = date.add(1, 'day');
     setDate(newDate);
-    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
+    const newUrl = `/${type}/${newDate.format('MM-DD-YYYY')}`;
     history.push(newUrl);
   };
 
   const getToday = () => {
     const newDate = dayjs();
     setDate(newDate);
-    const newUrl = `/${currentType}/${newDate.format('MM-DD-YYYY')}`;
+    const newUrl = `/${type}/${newDate.format('MM-DD-YYYY')}`;
     history.push(newUrl);
   };
 
@@ -38,7 +38,7 @@ const Calendar = ({ currentType, date, setDate }) => {
           value={date}
           onChange={newValue => {
             setDate(newValue);
-            const newUrl = `/${currentType}/${newValue.format('MM-DD-YYYY')}`;
+            const newUrl = `/${type}/${newValue.format('MM-DD-YYYY')}`;
             history.push(newUrl);
           }}
           textField={params => <TextField {...params} />}

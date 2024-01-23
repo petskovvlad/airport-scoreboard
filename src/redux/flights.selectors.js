@@ -6,7 +6,7 @@ const filterTextSelector = state => state.filterText;
 
 const departureListSelector = createSelector(flightsDataSelector, flightsData =>
   flightsData.filter(flight => flight.type === 'DEPARTURE'),
-  );
+);
 
 const arrivalListSelector = createSelector(flightsDataSelector, flightsData =>
   flightsData.filter(flight => flight.type === 'ARRIVAL'),
@@ -19,25 +19,24 @@ const filteredDepartureListSelector = createSelector(
   selectedDateSelector,
   filterTextSelector,
   (departures, selectedDate, filterText) =>
-    departures
-      .filter(flightData => dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day'))
-      .filter(
-        flight =>
-          flight.codeShare && flight.codeShare.toLowerCase().includes(filterText.toLowerCase()),
-      ),
+    departures.filter(({ departureDateExpected, codeShare }) => {
+      const isSameDay = dayjs(departureDateExpected).isSame(selectedDate, 'day');
+      const matchesFilter = codeShare && codeShare.toLowerCase().includes(filterText.toLowerCase());
+      return isSameDay && matchesFilter;
+    }),
 );
 
 const filteredArrivalListSelector = createSelector(
   arrivalListSelector,
   selectedDateSelector,
   filterTextSelector,
-  (arrivals, selectedDate, filterText) =>
-    arrivals
-      .filter(flightData => dayjs(flightData.departureDateExpected).isSame(selectedDate, 'day'))
-      .filter(
-        flight =>
-          flight.codeShare && flight.codeShare.toLowerCase().includes(filterText.toLowerCase()),
-      ),
+  (arrivals, selectedDate, filterText) => {
+    return arrivals.filter(({ departureDateExpected, codeShare }) => {
+      const isSameDay = dayjs(departureDateExpected).isSame(selectedDate, 'day');
+      const matchesFilter = codeShare && codeShare.toLowerCase().includes(filterText.toLowerCase());
+      return isSameDay && matchesFilter;
+    });
+  },
 );
 
 export {
