@@ -16,8 +16,7 @@ import './flightsList.scss';
 
 const FlightsList = ({ getFlightsData }) => {
   const { 0: paramValue } = useParams();
-  const [type, currentDate] =
-    paramValue && typeof paramValue === 'string' ? paramValue.split('/') : [undefined, undefined];
+  const [type, currentDate] = (paramValue?.split('/') ?? []);
 
   const [buttonTypeSelected, changeButtonTypeSelected] = useState(() => {
     switch (type) {
